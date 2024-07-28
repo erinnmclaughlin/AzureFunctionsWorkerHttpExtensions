@@ -49,5 +49,25 @@ public HttpResponseData Example2(
     return response;
 }
 
+// Or do both!:
+[Function(nameof(PocoAndPrimitiveCombo))]
+public async Task<HttpResponseData> PocoAndPrimitiveCombo(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
+    [BindQuery] Person? person,
+    [BindQuery] string? description)
+{
+    var response = req.CreateResponse(System.Net.HttpStatusCode.OK);
+
+    await response.WriteAsJsonAsync(new 
+    {
+        person?.Name,
+        person?.Age,
+        description 
+    });
+    
+    return response;
+}
+
+public record Person(string Name, int Age);
 public record Poco(string Name, int[] LuckyNumbers);
 ```
