@@ -17,4 +17,16 @@ public sealed class PocoFunctions
         await response.WriteAsJsonAsync(poco);
         return response;
     }
+
+    public record PocoWithCollection(string Name, string[] Nicknames);
+
+    [Function(nameof(EchoPocoWithCollection))]
+    public async Task<HttpResponseData> EchoPocoWithCollection(
+        [HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req,
+        [BindQuery] PocoWithCollection poco)
+    {
+        var response = req.CreateResponse(System.Net.HttpStatusCode.OK);
+        await response.WriteAsJsonAsync(poco);
+        return response;
+    }
 }
