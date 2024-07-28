@@ -16,4 +16,14 @@ public sealed class CollectionTypeFunctions
         await response.WriteAsJsonAsync(value);
         return response;
     }
+
+    [Function(nameof(EchoIntegerList))]
+    public async Task<HttpResponseData> EchoIntegerList(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
+        [BindQuery] List<int> value)
+    {
+        var response = req.CreateResponse(HttpStatusCode.OK);
+        await response.WriteAsJsonAsync(value);
+        return response;
+    }
 }

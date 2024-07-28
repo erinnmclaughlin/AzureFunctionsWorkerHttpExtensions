@@ -30,4 +30,25 @@ public sealed class CollectionTypeTests
             Assert.Equal(expectedValues, responseBody);
         }
     }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("?value=1&value=2&value=3", 1, 2, 3)]
+    [InlineData("?value=1,2,3", 1, 2, 3, Skip = "TODO: Support this collection style")]
+    public async Task EchoIntegerListTests(string queryString, params int[] expectedValues)
+    {
+        var response = await _appClient.GetAsync("EchoIntegerList" + queryString);
+        var responseBody = await response.Content.ReadFromJsonAsync<List<int>>();
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        if (expectedValues.Length == 0)
+        {
+            Assert.Null(responseBody);
+        }
+        else
+        {
+            Assert.Equal(expectedValues, responseBody);
+        }
+    }
 }
