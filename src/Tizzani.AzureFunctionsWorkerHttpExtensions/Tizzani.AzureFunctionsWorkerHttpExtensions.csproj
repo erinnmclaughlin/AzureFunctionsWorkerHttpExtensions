@@ -4,6 +4,17 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Tizzani.AzureFunctionsWorkerHttpExtensions</Title>
+    <Version>1.0.0-preview1</Version>
+    <Authors>erinnmclaughlin</Authors>
+    <Description>Extensions for Azure.Functions.Worker.Extensions.Http</Description>
+    <Copyright></Copyright>
+    <PackageProjectUrl>https://github.com/erinnmclaughlin/AzureFunctionsWorkerHttpExtensions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/erinnmclaughlin/AzureFunctionsWorkerHttpExtensions</RepositoryUrl>
+    <PackageTags>Azure Functions;Azure Functions Worker;Tizzani</PackageTags>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.2.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.2.*" />
   </ItemGroup>
 
 </Project>
