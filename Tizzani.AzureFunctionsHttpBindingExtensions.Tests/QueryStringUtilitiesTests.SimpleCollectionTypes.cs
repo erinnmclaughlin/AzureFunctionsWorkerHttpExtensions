@@ -93,4 +93,23 @@ public partial class QueryStringUtilitiesTests
             Assert.Equal(expectedValue, value);
         }
     }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("?myValue=Value2", TestEnum.Value2)]
+    [InlineData("?myValue=Value2&myValue=Value2", TestEnum.Value2, TestEnum.Value2)]
+    [InlineData("?myValue=Value1&myValue=Value2", TestEnum.Value1, TestEnum.Value2)]
+    public void CanConvertEnumArray(string queryString, params TestEnum[] expectedValue)
+    {
+        var value = TestDeserialize<TestEnum[]>(queryString);
+
+        if (expectedValue.Length == 0)
+        {
+            Assert.Null(value);
+        }
+        else
+        {
+            Assert.Equal(expectedValue, value);
+        }
+    }
 }

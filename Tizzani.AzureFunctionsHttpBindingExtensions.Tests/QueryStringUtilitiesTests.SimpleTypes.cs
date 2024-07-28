@@ -101,4 +101,23 @@ public partial class QueryStringUtilitiesTests
         Assert.Equal(expectedDateValue, value);
     }
 
+    [Theory]
+    [InlineData("", TestEnum.Value1)]
+    [InlineData("?myValue=Value1", TestEnum.Value1)]
+    [InlineData("?myValue=Value2", TestEnum.Value2)]
+    public void CanConvertEnum(string queryString, TestEnum expectedValue)
+    {
+        var value = TestDeserialize<TestEnum>(queryString);
+        Assert.Equal(expectedValue, value);
+    }
+
+    [Theory]
+    [InlineData("", null)]
+    [InlineData("?myValue=Value1", TestEnum.Value1)]
+    [InlineData("?myValue=Value2", TestEnum.Value2)]
+    public void CanConvertNullableEnum(string queryString, TestEnum? expectedValue)
+    {
+        var value = TestDeserialize<TestEnum?>(queryString);
+        Assert.Equal(expectedValue, value);
+    }
 }
