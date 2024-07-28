@@ -83,4 +83,18 @@ public sealed class SimpleTypeTests
             Assert.Equal(DateTime.Parse(expectedBody), responseBody);
         }
     }
+
+    [Fact]
+    public async Task EchoMultipleValuesTests()
+    {
+        const string queryString = "?value1=Mia&value2=42";
+        var response = await _appClient.GetAsync("EchoMultipleValues" + queryString);
+        var responseBody = await response.Content.ReadFromJsonAsync<Dictionary<string, object>>();
+
+        Assert.NotNull(responseBody);
+        Assert.True(responseBody.ContainsKey("value1"));
+        Assert.Equal("Mia", responseBody["value1"].ToString());
+        Assert.True(responseBody.ContainsKey("value2"));
+        Assert.Equal(42, int.Parse(responseBody["value2"].ToString()!));
+    }
 }

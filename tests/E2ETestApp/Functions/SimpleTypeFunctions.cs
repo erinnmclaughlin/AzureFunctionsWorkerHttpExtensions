@@ -56,4 +56,15 @@ public sealed class SimpleTypeFunctions
         await response.WriteAsJsonAsync(value);
         return response;
     }
+
+    [Function(nameof(EchoMultipleValues))]
+    public async Task<HttpResponseData> EchoMultipleValues(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
+        [BindQuery] string value1,
+        [BindQuery] int value2)
+    {
+        var response = req.CreateResponse(HttpStatusCode.OK);
+        await response.WriteAsJsonAsync(new { value1, value2 });
+        return response;
+    }
 }
