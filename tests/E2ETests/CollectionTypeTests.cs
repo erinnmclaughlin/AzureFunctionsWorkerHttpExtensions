@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 
 namespace E2ETests;
 
+[Collection("E2E Tests")]
 public sealed class CollectionTypeTests
 {
     private static readonly HttpClient _appClient = new()
