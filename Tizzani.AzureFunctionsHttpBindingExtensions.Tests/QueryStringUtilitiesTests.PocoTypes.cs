@@ -39,4 +39,14 @@ public partial class QueryStringUtilitiesTests
         Assert.NotNull(value);
         Assert.Equal("", value.MyValue); // property should be ignored because of case sensitivity
     }
+
+    [Fact]
+    public void CanConvertPocoWithCollection()
+    {
+        const string queryString = "?MyValues=42&MyValues=24";
+
+        var value = TestDeserialize<PocoClassWithCollection>(queryString);
+        Assert.NotNull(value);
+        Assert.Equal([42, 24], value.MyValues);
+    }
 }
