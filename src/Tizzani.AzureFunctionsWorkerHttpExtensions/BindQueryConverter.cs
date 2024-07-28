@@ -1,12 +1,9 @@
-﻿using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Converters;
+﻿using Microsoft.Azure.Functions.Worker.Converters;
+using Tizzani.AzureFunctionsWorkerHttpExtensions.Implementation;
 
-namespace Tizzani.AzureFunctionsHttpBindingExtensions;
+namespace Tizzani.AzureFunctionsWorkerHttpExtensions;
 
-/// <summary>
-/// Specifies that a parameter should be bound using the HTTP request query string when using the <see cref="HttpTriggerAttribute"/>.
-/// </summary>
-public class BindQueryAttribute() : InputConverterAttribute(typeof(BindQueryConverter))
+internal class BindQueryConverter : IInputConverter
 {
     public ValueTask<ConversionResult> ConvertAsync(ConverterContext context)
     {

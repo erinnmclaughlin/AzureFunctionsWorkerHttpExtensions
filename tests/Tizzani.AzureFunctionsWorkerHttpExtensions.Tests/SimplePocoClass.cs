@@ -1,4 +1,4 @@
-﻿namespace Tizzani.AzureFunctionsHttpBindingExtensions.Tests;
+﻿namespace Tizzani.AzureFunctionsWorkerHttpExtensions.Tests;
 
 public class SimplePocoClass
 {

@@ -1,6 +1,7 @@
 ﻿using Azure.Core.Serialization;
-using Microsoft.Azure.Functions.Worker.Extensions.Http;
 using System.Text.Json;
+using Tizzani.AzureFunctionsWorkerHttpExtensions.Implementation;
+using Tizzani.AzureFunctionsWorkerHttpExtensions.Tests;
 
 namespace Tizzani.AzureFunctionsHttpBindingExtensions.Tests;
 
@@ -19,7 +20,7 @@ public partial class QueryStringUtilitiesTests
     [Fact]
     public void CanConvertSimplePoco_WhenJsonOptionsAreCaseInsensitive()
     {
-        const string queryString = "?myvalue=hello";
+        const string queryString = "?myValue=hello";
 
         var serializer = new JsonObjectSerializer(new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         var value = QueryStringUtilities.Deserialize<SimplePocoClass>(queryString, serializer);
@@ -31,7 +32,7 @@ public partial class QueryStringUtilitiesTests
     [Fact]
     public void CanConvertSimplePoco_WhenJsonOptionsAreCaseSensitive()
     {
-        const string queryString = "?myvalue=hello";
+        const string queryString = "?myValue=hello";
 
         var serializer = new JsonObjectSerializer(new JsonSerializerOptions { PropertyNameCaseInsensitive = false });
         var value = QueryStringUtilities.Deserialize<SimplePocoClass>(queryString, serializer);

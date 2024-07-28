@@ -1,10 +1,9 @@
 ﻿using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Extensions.Http;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace Tizzani.AzureFunctionsHttpBindingExtensions;
+namespace Tizzani.AzureFunctionsWorkerHttpExtensions.Implementation;
 
 internal class DefaultFromQueryConversionFeature : IQueryStringConversionFeature
 {

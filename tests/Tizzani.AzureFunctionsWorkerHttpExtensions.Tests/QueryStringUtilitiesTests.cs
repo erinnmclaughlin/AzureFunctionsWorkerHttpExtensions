@@ -1,5 +1,5 @@
 ﻿using Azure.Core.Serialization;
-using Microsoft.Azure.Functions.Worker.Extensions.Http;
+using Tizzani.AzureFunctionsWorkerHttpExtensions.Implementation;
 
 namespace Tizzani.AzureFunctionsHttpBindingExtensions.Tests;
 

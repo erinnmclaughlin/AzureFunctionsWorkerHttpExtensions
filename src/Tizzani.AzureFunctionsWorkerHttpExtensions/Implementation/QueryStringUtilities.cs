@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Web;
 
-namespace Microsoft.Azure.Functions.Worker.Extensions.Http;
+namespace Tizzani.AzureFunctionsWorkerHttpExtensions.Implementation;
 
 internal static class QueryStringUtilities
 {

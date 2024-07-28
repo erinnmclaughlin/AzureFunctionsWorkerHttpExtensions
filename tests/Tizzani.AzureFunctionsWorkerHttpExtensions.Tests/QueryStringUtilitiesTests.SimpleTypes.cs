@@ -1,3 +1,5 @@
+using Tizzani.AzureFunctionsWorkerHttpExtensions.Tests;
+
 namespace Tizzani.AzureFunctionsHttpBindingExtensions.Tests;
 
 public partial class QueryStringUtilitiesTests

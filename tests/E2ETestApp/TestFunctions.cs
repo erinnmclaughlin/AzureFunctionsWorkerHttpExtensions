@@ -1,7 +1,7 @@
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using System.Net;
-using Tizzani.AzureFunctionsHttpBindingExtensions;
+using Tizzani.AzureFunctionsWorkerHttpExtensions;
 
 namespace E2ETestApp;
 

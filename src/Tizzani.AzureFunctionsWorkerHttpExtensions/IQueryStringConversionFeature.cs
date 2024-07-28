@@ -1,6 +1,6 @@
 ﻿using Microsoft.Azure.Functions.Worker;
 
-namespace Tizzani.AzureFunctionsHttpBindingExtensions;
+namespace Tizzani.AzureFunctionsWorkerHttpExtensions;
 
 /// <summary>
 /// Defines an interface for model binding conversion used when binding to

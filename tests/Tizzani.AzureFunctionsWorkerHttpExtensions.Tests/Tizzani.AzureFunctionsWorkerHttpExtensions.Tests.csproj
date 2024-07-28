@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tizzani.AzureFunctionsHttpBindingExtensions\Tizzani.AzureFunctionsHttpBindingExtensions.csproj" />
+    <ProjectReference Include="..\..\src\Tizzani.AzureFunctionsWorkerHttpExtensions\Tizzani.AzureFunctionsWorkerHttpExtensions.csproj" />
   </ItemGroup>
 
   <ItemGroup>
