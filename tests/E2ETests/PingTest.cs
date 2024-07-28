@@ -5,7 +5,7 @@ namespace E2ETests;
 [Collection("E2E Tests")]
 public sealed class PingTest
 {
-    private readonly HttpClient _appClient = new()
+    private static readonly HttpClient _appClient = new()
     {
         BaseAddress = new Uri("http://localhost:7120/api/")
     };

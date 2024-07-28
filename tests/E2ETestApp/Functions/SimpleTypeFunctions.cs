@@ -7,6 +7,16 @@ namespace E2ETestApp.Functions;
 
 public sealed class SimpleTypeFunctions
 {
+    [Function(nameof(EchoStringValue))]
+    public async Task<HttpResponseData> EchoStringValue(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
+        [BindQuery] string value)
+    {
+        var response = req.CreateResponse(HttpStatusCode.OK);
+        await response.WriteAsJsonAsync(value);
+        return response;
+    }
+
     [Function(nameof(EchoIntegerValue))]
     public async Task<HttpResponseData> EchoIntegerValue(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
