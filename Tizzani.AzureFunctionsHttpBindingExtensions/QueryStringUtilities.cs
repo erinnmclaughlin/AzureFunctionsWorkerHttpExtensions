@@ -1,5 +1,6 @@
 ﻿using Azure.Core.Serialization;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
@@ -27,6 +28,17 @@ internal static class QueryStringUtilities
         if (IsSimpleType(targetType))
         {
             return query[query.AllKeys[0]] is { } source ? ConvertSimpleType(targetType, source) : CreateDefaultInstanceOfType(targetType);
+        }
+
+        if (typeof(IEnumerable).IsAssignableFrom(targetType))
+        {
+            return ConvertCollectionType(targetType, query.GetValues(query.AllKeys[0]) ?? []);
+
+            //if (collection is null)
+            //    return null;
+
+            //var converter = TypeDescriptor.GetConverter(targetType);
+            //return converter.ConvertFrom(collection);
         }
 
         var objectDictionary = GetObjectDictionary(query, targetType);
@@ -57,19 +69,7 @@ internal static class QueryStringUtilities
             // Handle collection types:
             if (typeof(IEnumerable).IsAssignableFrom(propertyType))
             {
-                var arrayType = GetArrayType(propertyType);
-                var arrayValues = query.GetValues(propertyName);
-
-                // Handle collections of simple types:
-                if (IsSimpleType(arrayType))
-                {
-                    var parsedValues = arrayValues.Select(p => ConvertSimpleType(arrayType, p)).ToArray();
-                    dict.Add(propertyName, parsedValues);
-                }
-
-                // TODO: Handle collections of complex types
-                // ..
-
+                dict.Add(propertyName, ConvertCollectionType(propertyType, query.GetValues(propertyName) ?? []));
                 continue;
             }
 
@@ -104,12 +104,38 @@ internal static class QueryStringUtilities
         return CreateDefaultInstanceOfType(targetType);
     }
 
+    private static object? ConvertCollectionType(Type targetCollectionType, string[] arrayValues)
+    {
+        var collectionType = GetCollectionType(targetCollectionType);
+
+        var convertMethod = typeof(QueryStringUtilities)
+            .GetMethod(nameof(ConvertCollectionType), BindingFlags.NonPublic | BindingFlags.Static, types: [typeof(string[]), typeof(bool)])!
+            .MakeGenericMethod(collectionType);
+
+        return convertMethod.Invoke(null, [arrayValues, targetCollectionType.IsArray]);
+    }
+
+    private static ICollection<T?> ConvertCollectionType<T>(string[] arrayValues, bool isArrayType)
+    {
+        // Handle collections of simple types:
+        if (IsSimpleType(typeof(T)))
+        {
+            var enumerable = arrayValues.Select(p => (T?)ConvertSimpleType(typeof(T), p));
+            return isArrayType ? enumerable.ToArray() : enumerable.ToList();
+        }
+
+        // TODO: Handle collections of complex types
+        // ..
+
+        return [];
+    }
+
     private static object? CreateDefaultInstanceOfType(Type targetType)
     {
         return targetType.IsValueType ? Activator.CreateInstance(targetType) : null;
     }
 
-    private static Type GetArrayType(Type propertyType)
+    private static Type GetCollectionType(Type propertyType)
     {
         return propertyType.GetElementType() ?? propertyType.GenericTypeArguments[0];
     }
