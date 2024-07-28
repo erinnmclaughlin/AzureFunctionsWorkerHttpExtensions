@@ -28,15 +28,22 @@ public HttpResponseData AddNumbers(
 }
 
 // Or bind to POCO!:
-[Function(nameof(SayHelloWithPoco))]
-public HttpResponseData SayHelloWithPoco(
+[Function(nameof(PocoExample))]
+public HttpResponseData PocoExample(
     [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequestData req,
-    [BindQuery] CallerName? caller)
+    [BindQuery] Poco? poco)
 {
     var response = req.CreateResponse(HttpStatusCode.OK);
-    response.WriteString($"Hello, {caller?.Name}");
+    response.WriteString($"Hello, {poco?.Name ?? "user"}!");
+
+    if (poco?.Numbers is not null)
+    {
+        var numbersString = string.Join(" + ", poco.Numbers);
+        response.WriteString($" {numbersString} = {poco.Numbers.Sum()}");
+    }
+
     return response;
 }
 
-public record CallerName(string Name);
+public record Poco(string Name, int[] Numbers);
 ```
