@@ -9,16 +9,29 @@
     <Version>1.0.0-preview1</Version>
     <Authors>erinnmclaughlin</Authors>
     <Description>Extensions for Azure.Functions.Worker.Extensions.Http</Description>
-    <Copyright></Copyright>
+    <Copyright>2024 Erin McLaughlin</Copyright>
     <PackageProjectUrl>https://github.com/erinnmclaughlin/AzureFunctionsWorkerHttpExtensions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/erinnmclaughlin/AzureFunctionsWorkerHttpExtensions</RepositoryUrl>
     <PackageTags>Azure Functions;Azure Functions Worker;Tizzani</PackageTags>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="Tizzani.AzureFunctionsWorkerHttpExtensions.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

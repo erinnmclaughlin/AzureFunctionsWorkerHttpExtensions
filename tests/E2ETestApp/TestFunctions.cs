@@ -28,6 +28,26 @@ public sealed class TestFunctions
         return response;
     }
 
+    [Function(nameof(AddNumbersFromCollection))]
+    public HttpResponseData AddNumbersFromCollection(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequestData req,
+        [BindQuery] int[]? numbers)
+    {
+        var response = req.CreateResponse(HttpStatusCode.OK);
+
+        if (numbers is not { Length: > 0 })
+        {
+            response.WriteString("No numbers provided");
+        }
+        else
+        {
+            var numbersString = string.Join(" + ", numbers);
+            response.WriteString($" {numbersString} = {numbers.Sum()}");
+        }
+
+        return response;
+    }
+
     public record Poco(string Name, int[] Numbers);
 
     [Function(nameof(PocoExample))]
@@ -38,10 +58,10 @@ public sealed class TestFunctions
         var response = req.CreateResponse(HttpStatusCode.OK);
         response.WriteString($"Hello, {poco?.Name ?? "user"}!");
 
-        if (poco?.Numbers is not null)
+        if (poco?.Numbers is { Length: > 0 } numbers)
         {
-            var numbersString = string.Join(" + ", poco.Numbers);
-            response.WriteString($" {numbersString} = {poco.Numbers.Sum()}");
+            var numbersString = string.Join(" + ", numbers);
+            response.WriteString($" {numbersString} = {numbers.Sum()}");
         }
 
         return response;
