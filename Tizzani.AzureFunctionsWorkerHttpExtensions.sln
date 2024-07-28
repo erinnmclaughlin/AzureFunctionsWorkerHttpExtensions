@@ -11,12 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5ED9E90F-E33
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tizzani.AzureFunctionsWorkerHttpExtensions", "src\Tizzani.AzureFunctionsWorkerHttpExtensions\Tizzani.AzureFunctionsWorkerHttpExtensions.csproj", "{35A30790-5EF0-41EB-82B7-2298825B3D4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E2ETests", "tests\E2ETests\E2ETests.csproj", "{A0F1456F-85BB-4896-B938-9E01BF1D7C8F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CAC57C6A-3443-440E-B15E-B8AA19EAB39E}"
-	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E2ETests", "tests\E2ETests\E2ETests.csproj", "{484A8F52-C6BA-4F65-A525-05CAA25EC2F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +27,10 @@ Global
 		{35A30790-5EF0-41EB-82B7-2298825B3D4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35A30790-5EF0-41EB-82B7-2298825B3D4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35A30790-5EF0-41EB-82B7-2298825B3D4A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A0F1456F-85BB-4896-B938-9E01BF1D7C8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0F1456F-85BB-4896-B938-9E01BF1D7C8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0F1456F-85BB-4896-B938-9E01BF1D7C8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0F1456F-85BB-4896-B938-9E01BF1D7C8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{484A8F52-C6BA-4F65-A525-05CAA25EC2F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{484A8F52-C6BA-4F65-A525-05CAA25EC2F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{484A8F52-C6BA-4F65-A525-05CAA25EC2F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{484A8F52-C6BA-4F65-A525-05CAA25EC2F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,7 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9917EEF1-6540-4AF5-8C64-4A80755FD75A} = {96A9D9F5-57B7-4C2C-9CB6-487355AF2CC4}
 		{35A30790-5EF0-41EB-82B7-2298825B3D4A} = {5ED9E90F-E332-47D2-A648-B7AB9A004EA3}
-		{A0F1456F-85BB-4896-B938-9E01BF1D7C8F} = {96A9D9F5-57B7-4C2C-9CB6-487355AF2CC4}
+		{484A8F52-C6BA-4F65-A525-05CAA25EC2F7} = {96A9D9F5-57B7-4C2C-9CB6-487355AF2CC4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6FA2DE5-DBE0-478F-8176-93A4FD8E25C4}
