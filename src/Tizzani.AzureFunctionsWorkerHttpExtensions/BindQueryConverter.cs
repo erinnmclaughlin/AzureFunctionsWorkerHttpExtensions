@@ -1,5 +1,4 @@
 ﻿using Microsoft.Azure.Functions.Worker.Converters;
-using Tizzani.AzureFunctionsWorkerHttpExtensions.Implementation;
 
 namespace Tizzani.AzureFunctionsWorkerHttpExtensions;
 
