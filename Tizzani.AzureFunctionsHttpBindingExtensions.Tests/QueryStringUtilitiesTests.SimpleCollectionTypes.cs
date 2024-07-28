@@ -112,4 +112,12 @@ public partial class QueryStringUtilitiesTests
             Assert.Equal(expectedValue, value);
         }
     }
+
+    [Fact(Skip = "TODO: Support query strings with indexed collections")]
+    public void CanConvertOrderedArray()
+    {
+        const string queryString = "?myValue[1]=world&myValue[0]=hello";
+        var value = TestDeserialize<string[]>(queryString);
+        Assert.Equal(["hello", "world"], value);
+    }
 }
