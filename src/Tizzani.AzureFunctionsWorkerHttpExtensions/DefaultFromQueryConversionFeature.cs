@@ -17,6 +17,10 @@ internal class DefaultFromQueryConversionFeature : IQueryStringConversionFeature
 
     public ValueTask<object?> ConvertAsync(FunctionContext context, Type targetType, object? source)
     {
+        Console.WriteLine("Here be the source:");
+        Console.WriteLine(source?.GetType().Name);
+        Console.WriteLine(source);
+
         var requestData = context.GetHttpRequestDataAsync();
 
         if (requestData.IsCompletedSuccessfully)
