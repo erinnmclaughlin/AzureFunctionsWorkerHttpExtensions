@@ -10,7 +10,7 @@ For more examples, check [here](./tests/E2ETestApp/Functions).
 // Bind directly to primitive types:
 [Function(nameof(Example1))]
 public HttpResponseData Example1(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequestData req,
+    [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
     [BindQuery] string? name,
     [BindQuery] int[]? luckyNumbers)
 {
@@ -31,7 +31,7 @@ public HttpResponseData Example1(
 // Or bind to POCO:
 [Function(nameof(Example2))]
 public HttpResponseData Example2(
-    [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequestData req,
+    [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
     [BindQuery] Poco? poco)
 {
     var response = req.CreateResponse(HttpStatusCode.OK);
