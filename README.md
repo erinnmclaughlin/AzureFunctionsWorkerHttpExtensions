@@ -18,18 +18,7 @@ public HttpResponseData Example1(
     [BindQuery] string? name,
     [BindQuery] int[]? luckyNumbers)
 {
-    var response = req.CreateResponse(HttpStatusCode.OK);
-    response.WriteString($"Hello, {(name ?? "user")}! ");
-
-    if (luckyNumbers == null || luckyNumbers.Length == 0)
-    {
-        response.WriteString("You do not have any lucky numbers!");
-    }
-    else
-    {
-        response.WriteString($"Your lucky numbers are: {string.Join(", ", luckyNumbers)}");
-    }
-    return response;
+    // ..
 }
 
 // Or bind to POCO:
@@ -38,19 +27,7 @@ public HttpResponseData Example2(
     [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
     [BindQuery] Poco? poco)
 {
-    var response = req.CreateResponse(HttpStatusCode.OK);
-    response.WriteString($"Hello, {poco?.Name ?? "user"}! ");
-
-    if (poco?.LuckyNumbers == null)
-    {
-        response.WriteString("You do not have any lucky numbers!");
-    }
-    else
-    {
-        response.WriteString($"Your lucky numbers are: {string.Join(", ", poco.LuckyNumbers)}");
-    }
-
-    return response;
+    // ..
 }
 
 // Or do both!:
@@ -60,16 +37,7 @@ public async Task<HttpResponseData> PocoAndPrimitiveCombo(
     [BindQuery] Person? person,
     [BindQuery] string? description)
 {
-    var response = req.CreateResponse(System.Net.HttpStatusCode.OK);
-
-    await response.WriteAsJsonAsync(new 
-    {
-        person?.Name,
-        person?.Age,
-        description 
-    });
-    
-    return response;
+    // ..
 }
 
 public record Person(string Name, int Age);
