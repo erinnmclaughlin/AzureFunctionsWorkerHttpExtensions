@@ -2,6 +2,10 @@
 
 This package adds support for binding query parameters in Azure Functions HTTP Triggers.
 
+```cmd
+dotnet add package Tizzani.AzureFunctionsWorkerHttpExtensions
+```
+
 ## Usage
 
 For more examples, check [here](./tests/E2ETestApp/Functions).
