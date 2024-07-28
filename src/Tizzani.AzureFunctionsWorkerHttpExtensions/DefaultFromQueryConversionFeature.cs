@@ -17,6 +17,10 @@ internal class DefaultFromQueryConversionFeature : IQueryStringConversionFeature
 
     public ValueTask<object?> ConvertAsync(FunctionContext context, Type targetType, object? source)
     {
+        Console.WriteLine("Here be the source:");
+        Console.WriteLine(source?.GetType().Name);
+        Console.WriteLine(source);
+
         var requestData = context.GetHttpRequestDataAsync();
 
         if (requestData.IsCompletedSuccessfully)
@@ -45,15 +49,14 @@ internal class DefaultFromQueryConversionFeature : IQueryStringConversionFeature
 
     private static object? ConvertQuery(FunctionContext context, HttpRequestData requestData, Type targetType, object? source)
     {
+        if (requestData.Query.AllKeys.Length == 0)
+        {
+            return targetType.CreateDefaultInstance();
+        }
+
         if (targetType.IsSimpleType())
         {
-            if (source is null)
-            {
-                return targetType.CreateDefaultInstance();
-            }
-
-            var typeConverter = TypeDescriptor.GetConverter(targetType);
-            return typeConverter.IsValid(source) ? typeConverter.ConvertFrom(source) : targetType.CreateDefaultInstance();
+            return ConvertSimpleType(targetType, source);
         }
 
         var serializer = context.InstanceServices.GetService<IOptions<WorkerOptions>>()?.Value?.Serializer
@@ -64,16 +67,6 @@ internal class DefaultFromQueryConversionFeature : IQueryStringConversionFeature
 
     private static object? Convert(NameValueCollection query, Type targetType, ObjectSerializer serializer)
     {
-        if (query.AllKeys.Length == 0)
-        {
-            return targetType.CreateDefaultInstance();
-        }
-
-        if (targetType.IsSimpleType())
-        {
-            return query[query.AllKeys[0]] is { } source ? ConvertSimpleType(targetType, source) : targetType.CreateDefaultInstance();
-        }
-
         if (typeof(IEnumerable).IsAssignableFrom(targetType))
         {
             var collection = ConvertCollectionType(targetType, query.GetValues(query.AllKeys[0]) ?? []);
