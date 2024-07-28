@@ -9,7 +9,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 
-namespace Tizzani.AzureFunctionsWorkerHttpExtensions.Implementation;
+namespace Tizzani.AzureFunctionsWorkerHttpExtensions;
 
 internal class DefaultFromQueryConversionFeature : IQueryStringConversionFeature
 {
