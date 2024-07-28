@@ -19,7 +19,11 @@ internal static class QueryStringUtilities
     public static object? Deserialize(string queryString, Type targetType, ObjectSerializer serializer)
     {
         var query = HttpUtility.ParseQueryString(queryString);
+        return Deserialize(query, targetType, serializer);
+    }
 
+    public static object? Deserialize(NameValueCollection query, Type targetType, ObjectSerializer serializer)
+    {
         if (query.AllKeys.Length == 0)
         {
             return CreateDefaultInstanceOfType(targetType);
