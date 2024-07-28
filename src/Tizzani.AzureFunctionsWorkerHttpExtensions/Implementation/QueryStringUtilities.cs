@@ -26,12 +26,12 @@ internal static class QueryStringUtilities
     {
         if (query.AllKeys.Length == 0)
         {
-            return CreateDefaultInstanceOfType(targetType);
+            return targetType.CreateDefaultInstance();
         }
 
-        if (IsSimpleType(targetType))
+        if (targetType.IsSimpleType())
         {
-            return query[query.AllKeys[0]] is { } source ? ConvertSimpleType(targetType, source) : CreateDefaultInstanceOfType(targetType);
+            return query[query.AllKeys[0]] is { } source ? ConvertSimpleType(targetType, source) : targetType.CreateDefaultInstance();
         }
 
         if (typeof(IEnumerable).IsAssignableFrom(targetType))
@@ -62,7 +62,7 @@ internal static class QueryStringUtilities
             }
 
             // Handle simple types:
-            if (IsSimpleType(propertyType))
+            if (propertyType.IsSimpleType())
             {
                 dict.Add(propertyName, ConvertSimpleType(propertyType, query[propertyName]));
                 continue;
@@ -93,7 +93,7 @@ internal static class QueryStringUtilities
 
         if (string.IsNullOrEmpty(stringValue))
         {
-            return CreateDefaultInstanceOfType(targetType);
+            return targetType.CreateDefaultInstance();
         }
 
         var typeConverter = TypeDescriptor.GetConverter(targetType);
@@ -103,16 +103,16 @@ internal static class QueryStringUtilities
             return typeConverter.ConvertFromString(null, CultureInfo.InvariantCulture, stringValue);
         }
 
-        return CreateDefaultInstanceOfType(targetType);
+        return targetType.CreateDefaultInstance();
     }
 
     private static IEnumerable? ConvertCollectionType(Type targetCollectionType, string[] arrayValues)
     {
-        var collectionType = GetCollectionType(targetCollectionType);
+        var elementType = targetCollectionType.GetCollectionElementType();
 
         var convertMethod = typeof(QueryStringUtilities)
             .GetMethod(nameof(ConvertCollectionType), BindingFlags.NonPublic | BindingFlags.Static, types: [typeof(string[])])!
-            .MakeGenericMethod(collectionType);
+            .MakeGenericMethod(elementType);
 
         return (IEnumerable?)convertMethod.Invoke(null, [arrayValues]);
     }
@@ -120,7 +120,7 @@ internal static class QueryStringUtilities
     private static IEnumerable<T?> ConvertCollectionType<T>(string[] arrayValues)
     {
         // Handle collections of simple types:
-        if (IsSimpleType(typeof(T)))
+        if (typeof(T).IsSimpleType())
         {
             return arrayValues.Select(p => (T?)ConvertSimpleType(typeof(T), p));
         }
@@ -129,34 +129,5 @@ internal static class QueryStringUtilities
         // ..
 
         return [];
-    }
-
-    private static object? CreateDefaultInstanceOfType(Type targetType)
-    {
-        return targetType.IsValueType ? Activator.CreateInstance(targetType) : null;
-    }
-
-    private static Type GetCollectionType(Type propertyType)
-    {
-        return propertyType.GetElementType() ?? propertyType.GenericTypeArguments[0];
-    }
-
-    private static bool IsSimpleType(Type type)
-    {
-        if (Nullable.GetUnderlyingType(type) is { } underlyingType)
-        {
-            type = underlyingType;
-        }
-
-        return type.IsPrimitive
-            || type.IsEnum
-            || type == typeof(string)
-            || type == typeof(decimal)
-            || type == typeof(DateTime)
-            || type == typeof(DateTimeOffset)
-            || type == typeof(TimeSpan)
-            || type == typeof(DateOnly)
-            || type == typeof(TimeOnly)
-            || type == typeof(Guid);
     }
 }

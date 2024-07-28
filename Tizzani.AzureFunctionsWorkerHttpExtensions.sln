@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tizzani.AzureFunctionsWorke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tizzani.AzureFunctionsWorkerHttpExtensions.Tests", "tests\Tizzani.AzureFunctionsWorkerHttpExtensions.Tests\Tizzani.AzureFunctionsWorkerHttpExtensions.Tests.csproj", "{ED423DFE-8ABF-4EDD-83AE-7C3BA0033B52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E2ETests", "tests\E2ETests\E2ETests.csproj", "{A0F1456F-85BB-4896-B938-9E01BF1D7C8F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{ED423DFE-8ABF-4EDD-83AE-7C3BA0033B52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED423DFE-8ABF-4EDD-83AE-7C3BA0033B52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED423DFE-8ABF-4EDD-83AE-7C3BA0033B52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0F1456F-85BB-4896-B938-9E01BF1D7C8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0F1456F-85BB-4896-B938-9E01BF1D7C8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0F1456F-85BB-4896-B938-9E01BF1D7C8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0F1456F-85BB-4896-B938-9E01BF1D7C8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{9917EEF1-6540-4AF5-8C64-4A80755FD75A} = {96A9D9F5-57B7-4C2C-9CB6-487355AF2CC4}
 		{35A30790-5EF0-41EB-82B7-2298825B3D4A} = {5ED9E90F-E332-47D2-A648-B7AB9A004EA3}
 		{ED423DFE-8ABF-4EDD-83AE-7C3BA0033B52} = {96A9D9F5-57B7-4C2C-9CB6-487355AF2CC4}
+		{A0F1456F-85BB-4896-B938-9E01BF1D7C8F} = {96A9D9F5-57B7-4C2C-9CB6-487355AF2CC4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6FA2DE5-DBE0-478F-8176-93A4FD8E25C4}

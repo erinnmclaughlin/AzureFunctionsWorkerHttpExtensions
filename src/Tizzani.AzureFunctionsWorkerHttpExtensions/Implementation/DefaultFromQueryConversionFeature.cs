@@ -40,14 +40,15 @@ internal class DefaultFromQueryConversionFeature : IQueryStringConversionFeature
 
     private static object? ConvertQuery(FunctionContext context, HttpRequestData requestData, Type targetType, object? source)
     {
-        if (source is not null)
+        if (targetType.IsSimpleType())
         {
-            var typeConverter = TypeDescriptor.GetConverter(targetType);
-
-            if (typeConverter.IsValid(source))
+            if (source is null)
             {
-                return typeConverter.ConvertFrom(source);
+                return targetType.CreateDefaultInstance();
             }
+
+            var typeConverter = TypeDescriptor.GetConverter(targetType);
+            return typeConverter.IsValid(source) ? typeConverter.ConvertFrom(source) : targetType.CreateDefaultInstance();
         }
 
         var serializer = context.InstanceServices.GetService<IOptions<WorkerOptions>>()?.Value?.Serializer
