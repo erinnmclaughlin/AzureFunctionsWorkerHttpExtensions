@@ -12,7 +12,8 @@ internal static class QueryStringUtilities
 {
     public static T? Deserialize<T>(string queryString, ObjectSerializer serializer)
     {
-        return (T?)Deserialize(queryString, typeof(T), serializer);
+        var obj = Deserialize(queryString, typeof(T), serializer);
+        return (T?)obj;
     }
 
     public static object? Deserialize(string queryString, Type targetType, ObjectSerializer serializer)
@@ -37,13 +38,15 @@ internal static class QueryStringUtilities
         }
 
         var objectDictionary = GetObjectDictionary(query, targetType);
-        var objectStream = serializer.Serialize(objectDictionary, targetType).ToStream();
-        return serializer.Deserialize(objectStream, targetType, default);
+        var objectStream = serializer.Serialize(objectDictionary).ToStream();
+        var obj = serializer.Deserialize(objectStream, targetType, default);
+
+        return obj;
     }
 
     public static Dictionary<string, object?> GetObjectDictionary(NameValueCollection query, Type targetType)
     {
-        var dict = new Dictionary<string, object?>();
+        var dict = new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase);
         const BindingFlags bindingFlags = BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance;
 
         foreach (var propertyName in query.AllKeys)
