@@ -1,6 +1,5 @@
 ﻿using Azure.Core.Serialization;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
@@ -32,13 +31,9 @@ internal static class QueryStringUtilities
 
         if (typeof(IEnumerable).IsAssignableFrom(targetType))
         {
-            return ConvertCollectionType(targetType, query.GetValues(query.AllKeys[0]) ?? []);
-
-            //if (collection is null)
-            //    return null;
-
-            //var converter = TypeDescriptor.GetConverter(targetType);
-            //return converter.ConvertFrom(collection);
+            var collection = ConvertCollectionType(targetType, query.GetValues(query.AllKeys[0]) ?? []);
+            var collectionStream = serializer.Serialize(collection).ToStream();
+            return serializer.Deserialize(collectionStream, targetType, default);
         }
 
         var objectDictionary = GetObjectDictionary(query, targetType);
@@ -104,24 +99,23 @@ internal static class QueryStringUtilities
         return CreateDefaultInstanceOfType(targetType);
     }
 
-    private static object? ConvertCollectionType(Type targetCollectionType, string[] arrayValues)
+    private static IEnumerable? ConvertCollectionType(Type targetCollectionType, string[] arrayValues)
     {
         var collectionType = GetCollectionType(targetCollectionType);
 
         var convertMethod = typeof(QueryStringUtilities)
-            .GetMethod(nameof(ConvertCollectionType), BindingFlags.NonPublic | BindingFlags.Static, types: [typeof(string[]), typeof(bool)])!
+            .GetMethod(nameof(ConvertCollectionType), BindingFlags.NonPublic | BindingFlags.Static, types: [typeof(string[])])!
             .MakeGenericMethod(collectionType);
 
-        return convertMethod.Invoke(null, [arrayValues, targetCollectionType.IsArray]);
+        return (IEnumerable?)convertMethod.Invoke(null, [arrayValues]);
     }
 
-    private static ICollection<T?> ConvertCollectionType<T>(string[] arrayValues, bool isArrayType)
+    private static IEnumerable<T?> ConvertCollectionType<T>(string[] arrayValues)
     {
         // Handle collections of simple types:
         if (IsSimpleType(typeof(T)))
         {
-            var enumerable = arrayValues.Select(p => (T?)ConvertSimpleType(typeof(T), p));
-            return isArrayType ? enumerable.ToArray() : enumerable.ToList();
+            return arrayValues.Select(p => (T?)ConvertSimpleType(typeof(T), p));
         }
 
         // TODO: Handle collections of complex types
