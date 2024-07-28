@@ -17,18 +17,6 @@ public sealed class TestFunctions
         return response;
     }
 
-    public record CallerName(string Name);
-
-    [Function(nameof(SayHelloWithPoco))]
-    public HttpResponseData SayHelloWithPoco(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequestData req,
-        [BindQuery] CallerName? caller)
-    {
-        var response = req.CreateResponse(HttpStatusCode.OK);
-        response.WriteString($"Hello, {caller?.Name}");
-        return response;
-    }
-
     [Function(nameof(AddNumbers))]
     public HttpResponseData AddNumbers(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequestData req,
@@ -40,4 +28,22 @@ public sealed class TestFunctions
         return response;
     }
 
+    public record Poco(string Name, int[] Numbers);
+
+    [Function(nameof(PocoExample))]
+    public HttpResponseData PocoExample(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequestData req,
+        [BindQuery] Poco? poco)
+    {
+        var response = req.CreateResponse(HttpStatusCode.OK);
+        response.WriteString($"Hello, {poco?.Name ?? "user"}!");
+
+        if (poco?.Numbers is not null)
+        {
+            var numbersString = string.Join(" + ", poco.Numbers);
+            response.WriteString($" {numbersString} = {poco.Numbers.Sum()}");
+        }
+
+        return response;
+    }
 }
