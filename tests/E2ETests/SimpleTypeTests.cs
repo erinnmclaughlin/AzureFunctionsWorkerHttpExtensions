@@ -49,4 +49,38 @@ public sealed class SimpleTypeTests
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Equal(expectedBody, responseBody);
     }
+
+    [Theory]
+    [InlineData("", "0001-01-01T00:00:00")]
+    [InlineData("?value=2022-01-01T00:00:00", "2022-01-01T00:00:00")]
+    [InlineData("?otherValue=2022-01-01T00:00:00", "0001-01-01T00:00:00")]
+    public async Task EchoDateTimeValueTests(string queryString, string expectedBody)
+    {
+        var response = await _appClient.GetAsync("EchoDateTimeValue" + queryString);
+        var responseBody = await response.Content.ReadFromJsonAsync<DateTime>();
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equal(DateTime.Parse(expectedBody), responseBody);
+    }
+
+    [Theory]
+    [InlineData("", null)]
+    [InlineData("?value=2022-01-01T00:00:00", "2022-01-01T00:00:00")]
+    [InlineData("?otherValue=2022-01-01T00:00:00", null)]
+    public async Task EchoNullableDateTimeValueTests(string queryString, string? expectedBody)
+    {
+        var response = await _appClient.GetAsync("EchoNullableDateTimeValue" + queryString);
+        var responseBody = await response.Content.ReadFromJsonAsync<DateTime?>();
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        if (expectedBody is null)
+        {
+            Assert.Null(responseBody);
+        }
+        else
+        {
+            Assert.Equal(DateTime.Parse(expectedBody), responseBody);
+        }
+    }
 }

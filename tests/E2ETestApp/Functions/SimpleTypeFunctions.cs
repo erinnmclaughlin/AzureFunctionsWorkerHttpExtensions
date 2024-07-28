@@ -36,4 +36,24 @@ public sealed class SimpleTypeFunctions
         await response.WriteAsJsonAsync(value);
         return response;
     }
+
+    [Function(nameof(EchoDateTimeValue))]
+    public async Task<HttpResponseData> EchoDateTimeValue(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
+        [BindQuery] DateTime value)
+    {
+        var response = req.CreateResponse(HttpStatusCode.OK);
+        await response.WriteAsJsonAsync(value);
+        return response;
+    }
+
+    [Function(nameof(EchoNullableDateTimeValue))]
+    public async Task<HttpResponseData> EchoNullableDateTimeValue(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
+        [BindQuery] DateTime? value)
+    {
+        var response = req.CreateResponse(HttpStatusCode.OK);
+        await response.WriteAsJsonAsync(value);
+        return response;
+    }
 }
