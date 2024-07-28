@@ -2,6 +2,7 @@
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System.ComponentModel;
 
 namespace Tizzani.AzureFunctionsWorkerHttpExtensions.Implementation;
 
@@ -39,6 +40,16 @@ internal class DefaultFromQueryConversionFeature : IQueryStringConversionFeature
 
     private static object? ConvertQuery(FunctionContext context, HttpRequestData requestData, Type targetType, object? source)
     {
+        if (source is not null)
+        {
+            var typeConverter = TypeDescriptor.GetConverter(targetType);
+
+            if (typeConverter.IsValid(source))
+            {
+                return typeConverter.ConvertFrom(source);
+            }
+        }
+
         var serializer = context.InstanceServices.GetService<IOptions<WorkerOptions>>()?.Value?.Serializer
             ?? throw new InvalidOperationException("A serializer is not configured for the worker.");
 
