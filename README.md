@@ -15,6 +15,18 @@ public HttpResponseData SayHello(
     return response;
 }
 
+// Bind to multiple parameters at once:
+[Function(nameof(AddNumbers))]
+public HttpResponseData AddNumbers(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequestData req,
+    [BindQuery] int number1,
+    [BindQuery] int number2)
+{
+    var response = req.CreateResponse(HttpStatusCode.OK);
+    response.WriteString($"{number1} + {number2} = {number1 + number2}");
+    return response;
+}
+
 // Or bind to POCO!:
 [Function(nameof(SayHelloWithPoco))]
 public HttpResponseData SayHelloWithPoco(
