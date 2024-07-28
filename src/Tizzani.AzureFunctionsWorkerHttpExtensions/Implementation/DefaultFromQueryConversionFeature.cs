@@ -150,24 +150,15 @@ internal class DefaultFromQueryConversionFeature : IQueryStringConversionFeature
     {
         var elementType = targetCollectionType.GetCollectionElementType();
 
-        var convertMethod = typeof(QueryStringUtilities)
-            .GetMethod(nameof(ConvertCollectionType), BindingFlags.NonPublic | BindingFlags.Static, types: [typeof(string[])])!
-            .MakeGenericMethod(elementType);
-
-        return (IEnumerable?)convertMethod.Invoke(null, [arrayValues]);
-    }
-
-    private static IEnumerable<T?> ConvertCollectionType<T>(string[] arrayValues)
-    {
         // Handle collections of simple types:
-        if (typeof(T).IsSimpleType())
+        if (elementType.IsSimpleType())
         {
-            return arrayValues.Select(p => (T?)ConvertSimpleType(typeof(T), p));
+            return arrayValues.Select(p => ConvertSimpleType(elementType, p));
         }
 
         // TODO: Handle collections of complex types
         // ..
 
-        return [];
+        return null;
     }
 }
